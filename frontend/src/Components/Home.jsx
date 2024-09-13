@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react'
 import MetaData from './Layout/MetaData'
 import axios from 'axios'
 import Product from './Product/Product'
+import { useParams, useNavigate } from 'react-router-dom'
 
 
 const Home = () => {
     const [products, setProducts] = useState([])
     const [productsCount, setProductsCount] = useState(0)
+    let { keyword } = useParams();
+    const getProducts = async (keyword = '') => {
 
-    const getProducts = async () => {
-
-        let link = 'http://localhost:4001/api/v1/products'
+        let link = `http://localhost:4001/api/v1/products?keyword=${keyword}`
         // link = `http://localhost:4001/api/v1/products?page=${page}&keyword=${keyword}&price[lte]=${price[1]}&price[gte]=${price[0]}`
 
 
@@ -23,8 +24,8 @@ const Home = () => {
     }
 
     useEffect(() => {
-        getProducts()
-    }, []);
+        getProducts(keyword)
+    }, [keyword]);
     return (
         <>
             <MetaData title={'Buy Best Products Online'} />
