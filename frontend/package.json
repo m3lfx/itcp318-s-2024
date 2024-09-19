@@ -13,7 +13,7 @@
     "axios": "^1.7.7",
     "countries-list": "^3.1.1",
     "mdbreact": "^5.2.0",
-    "rc-slider": "^11.1.5",
+    "rc-slider": "^9.7.5",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.4",
     "react-dom": "^18.3.1",
