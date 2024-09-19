@@ -6,9 +6,11 @@ import { useParams, useNavigate } from 'react-router-dom'
 import Pagination from 'react-js-pagination'
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
+import Loader from './Layout/Loader'
 
 
 const Home = () => {
+    const [loading, setLoading] = useState(true)
     const [products, setProducts] = useState([])
     const [productsCount, setProductsCount] = useState(0)
     const [currentPage, setCurrentPage] = useState(1)
@@ -39,7 +41,7 @@ const Home = () => {
     const getProducts = async (page = 1, keyword = '', price, category) => {
 
         let link = `http://localhost:4001/api/v1/products?page=${page}&keyword=${keyword}&price[lte]=${price[1]}&price[gte]=${price[0]}`
-       
+
         if (category) {
             link = `http://localhost:4001/api/v1/products?keyword=${keyword}&page=${page}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}`
         }
@@ -50,6 +52,7 @@ const Home = () => {
         setResPerPage(res.data.resPerPage)
         setProductsCount(res.data.count)
         setFilteredProductsCount(res.data.filteredProductsCount)
+        setLoading(false)
 
     }
 
@@ -66,10 +69,10 @@ const Home = () => {
         setCurrentPage(pageNumber)
     }
     return (
+
         <>
             <MetaData title={'Buy Best Products Online'} />
-
-            <div className="container container-fluid">
+            {loading ? <Loader /> : (<div className="container container-fluid">
                 <h1 id="products_heading">Latest Products</h1>
                 <section id="products" className="container mt-5">
                     <div className="row">
@@ -155,7 +158,8 @@ const Home = () => {
                             linkClass="page-link"
                         />
                     </div>)}
-            </div>
+            </div>)}
+
         </>
 
     )
