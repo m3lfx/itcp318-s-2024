@@ -15,16 +15,34 @@ const Home = () => {
     const [resPerPage, setResPerPage] = useState(0)
     const [filteredProductsCount, setFilteredProductsCount] = useState(0)
     const [price, setPrice] = useState([1, 1000]);
+    const [category, setCategory] = useState('');
+
+    const categories = [
+        'Electronics',
+        'Cameras',
+        'Laptops',
+        'Accessories',
+        'Headphones',
+        'Food',
+        "Books",
+        'Clothes/Shoes',
+        'Beauty/Health',
+        'Sports',
+        'Outdoor',
+        'Home'
+    ]
     let { keyword } = useParams();
 
     const createSliderWithTooltip = Slider.createSliderWithTooltip;
     const Range = createSliderWithTooltip(Slider.Range);
 
-    const getProducts = async (page = 1, keyword = '', price) => {
+    const getProducts = async (page = 1, keyword = '', price, category) => {
 
         let link = `http://localhost:4001/api/v1/products?page=${page}&keyword=${keyword}&price[lte]=${price[1]}&price[gte]=${price[0]}`
-        // link = `http://localhost:4001/api/v1/products?page=${page}&keyword=${keyword}&price[lte]=${price[1]}&price[gte]=${price[0]}`
-
+       
+        if (category) {
+            link = `http://localhost:4001/api/v1/products?keyword=${keyword}&page=${page}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}`
+        }
 
         let res = await axios.get(link)
         console.log(res)
@@ -36,8 +54,8 @@ const Home = () => {
     }
 
     useEffect(() => {
-        getProducts(currentPage, keyword, price)
-    }, [currentPage, keyword, price]);
+        getProducts(currentPage, keyword, price, category)
+    }, [currentPage, keyword, price, category]);
 
     let count = productsCount
     if (keyword) {
@@ -80,7 +98,26 @@ const Home = () => {
                                             <h4 className="mb-3">
                                                 Categories
                                             </h4>
-                                          
+
+                                        </div>
+                                        <div className="mt-5">
+                                            <h4 className="mb-3">
+                                                Categories
+                                            </h4>
+                                            <ul className="pl-0">
+                                                {categories.map(category => (
+                                                    <li
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                            listStyleType: 'none'
+                                                        }}
+                                                        key={category}
+                                                        onClick={() => setCategory(category)}
+                                                    >
+                                                        {category}
+                                                    </li>
+                                                ))}
+                                            </ul>
                                         </div>
 
                                     </div>
