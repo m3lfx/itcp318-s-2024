@@ -5,6 +5,7 @@ module.exports = multer({
     limits: { fieldSize: 50 * 1024 * 1024 },
     storage: multer.diskStorage({}),
     fileFilter: (req, file, cb) => {
+        console.log(req.files)
         let ext = path.extname(file.originalname).toLowerCase();
         if (ext !== ".jpg" && ext !== ".jpeg" && ext !== ".png") {
             cb(new Error("Unsupported file type!"), false);
