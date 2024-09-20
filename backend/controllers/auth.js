@@ -5,8 +5,8 @@ const crypto = require('crypto')
 const cloudinary = require('cloudinary')
 
 exports.registerUser = async (req, res, next) => {
-    console.log(req.file)
-    const result = await cloudinary.v2.uploader.upload(req.file.path, {
+    console.log(req.body)
+    const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
         folder: 'avatars',
         width: 150,
         crop: "scale"
