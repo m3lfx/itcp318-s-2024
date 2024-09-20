@@ -15,6 +15,7 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false)
+    const [error, setError] = useState('')
     
     const navigate = useNavigate()
     let location = useLocation()
@@ -37,7 +38,7 @@ const Login = () => {
             
         } catch (error) {
             toast.error("invalid user or password", {
-                position: toast.POSITION.BOTTOM_RIGHT
+                position: "bottom-right"
             })
         }
     }

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
+import { toast, ToastContainer } from 'react-toastify';
 import './App.css'
 import Header from './Components/Layout/Header'
 import Footer from './Components/Layout/Footer'
@@ -23,6 +23,7 @@ function App() {
         </Routes>
       </Router>
       <Footer />
+      <ToastContainer />
     </div>
   )
 }
