@@ -9,6 +9,8 @@ import ProductDetails from './Components/Product/ProductDetails'
 import Login from './Components/User/Login'
 import Register from './Components/User/Register'
 import Profile from './Components/User/Profile';
+// import UpdatePassword from './Components/User/UpdatePassword';
+import UpdateProfile from './Components/User/UpdateProfile';
 function App() {
   return (
     <div className="App">
@@ -22,6 +24,11 @@ function App() {
           <Route path="/login" element={<Login />} exact="true" />
           <Route path="/register" element={<Register exact="true" />} />
           <Route path="/me" element={<Profile exact="true" />} />
+          <Route path="/me/update"
+            element={<UpdateProfile />
+            }
+            exact="true"
+          />
         </Routes>
       </Router>
       <Footer />
