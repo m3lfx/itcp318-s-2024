@@ -8,6 +8,7 @@ const { registerUser,
     updateProfile,
     updatePassword,
     forgotPassword,
+    resetPassword,
 } = require('../controllers/auth');
     const { isAuthenticatedUser, } = require('../middlewares/auth');
 
@@ -17,4 +18,5 @@ router.get('/me', isAuthenticatedUser, getUserProfile)
 router.put('/me/update', isAuthenticatedUser,  upload.single("avatar"), updateProfile)
 router.put('/password/update', isAuthenticatedUser, updatePassword)
 router.post('/password/forgot', forgotPassword);
+router.put('/password/reset/:token', resetPassword);
 module.exports = router;
