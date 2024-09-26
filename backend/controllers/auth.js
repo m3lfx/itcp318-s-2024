@@ -63,6 +63,7 @@ exports.loginUser = async (req, res, next) => {
 
      return res.status(201).json({
      	success:true,
+        user,
      	token
      });
     //  user = await User.findOne({ email })
