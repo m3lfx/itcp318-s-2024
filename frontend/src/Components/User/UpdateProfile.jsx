@@ -60,7 +60,7 @@ const UpdateProfile = () => {
         } catch (error) {
             console.log(error)
             toast.error('user not found', {
-                position: toast.POSITION.BOTTOM_RIGHT
+                position: 'bottom-right'
             });
         }
     }

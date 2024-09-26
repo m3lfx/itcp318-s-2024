@@ -9,7 +9,7 @@ import ProductDetails from './Components/Product/ProductDetails'
 import Login from './Components/User/Login'
 import Register from './Components/User/Register'
 import Profile from './Components/User/Profile';
-// import UpdatePassword from './Components/User/UpdatePassword';
+import UpdatePassword from './Components/User/UpdatePassword';
 import UpdateProfile from './Components/User/UpdateProfile';
 function App() {
   return (
@@ -29,6 +29,7 @@ function App() {
             }
             exact="true"
           />
+          <Route path="/password/update" element={<UpdatePassword />} />
         </Routes>
       </Router>
       <Footer />
