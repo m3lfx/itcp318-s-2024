@@ -69,3 +69,12 @@ exports.loginUser = async (req, res, next) => {
     //  user = await User.findOne({ email })
     // sendToken(user, 200, res)
 }
+
+exports.getUserProfile = async (req, res, next) => {
+    const user = await User.findById(req.user.id);
+
+    res.status(200).json({
+        success: true,
+        user
+    })
+}
