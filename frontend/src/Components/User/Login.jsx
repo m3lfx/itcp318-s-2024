@@ -32,7 +32,7 @@ const Login = () => {
                     'Content-Type': 'application/json'
                 }
             }
-            const { data } = await axios.post(`http://localhost:4001/api/v1/login`, { email, password }, config)
+            const { data } = await axios.post(`${import.meta.env.VITE_API}/login`, { email, password }, config)
             console.log(data)
             authenticate(data, () => navigate("/"))
             
