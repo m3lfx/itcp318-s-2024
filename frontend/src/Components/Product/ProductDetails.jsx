@@ -2,14 +2,25 @@ import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import MetaData from '../Layout/MetaData'
 import { Carousel } from 'react-bootstrap'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import axios from 'axios'
 const ProductDetails = () => {
     const [product, setProduct] = useState({})
     const [error, setError] = useState('')
     const [quantity, setQuantity] = useState(1)
+    // const [cart, setCart] = useState([])
+    const [state, setState] = useState({
+        cartItems: localStorage.getItem('cartItems')
+          ? JSON.parse(localStorage.getItem('cartItems'))
+          : [], 
+      })
+
     let { id } = useParams()
     let navigate = useNavigate()
+
+    
 
     const productDetails = async (id) => {
         let link = `http://localhost:4001/api/v1/product/${id}`
@@ -39,6 +50,57 @@ const ProductDetails = () => {
         const qty = count.valueAsNumber - 1;
         setQuantity(qty)
     }
+
+    const addItemToCart = async (id, quantity) => {
+        // console.log(id, quantity)
+        try {
+          const { data } = await axios.get(`${import.meta.env.VITE_API}/product/${id}`)
+          const item = {
+            product: data.product._id,
+            name: data.product.name,
+            price: data.product.price,
+            image: data.product.images[0].url,
+            stock: data.product.stock,
+            quantity: quantity
+          }
+    
+          const isItemExist = state.cartItems.find(i => i.product === item.product)
+          console.log( state)
+          setState({
+            ...state,
+            cartItems: [...state.cartItems, item]
+          })
+          if (isItemExist) {
+            setState({
+              ...state,
+              cartItems: state.cartItems.map(i => i.product === isItemExist.product ? item : i)
+            })
+          }
+          else {
+            setState({
+              ...state,
+              cartItems: [...state.cartItems, item]
+            })
+          }
+    
+          toast.success('Item Added to Cart', {
+            position: 'bottom-right'
+          })
+    
+        } catch (error) {
+          toast.error(error, {
+            position: 'top-left'
+          });
+          navigate('/')
+        }
+    
+      }
+    
+
+    const addToCart = async () => {
+        await addItemToCart(id, quantity);
+        localStorage.setItem('cartItems', JSON.stringify(state.cartItems))
+    }
     useEffect(() => {
         productDetails(id)
         if (error) {
@@ -46,6 +108,8 @@ const ProductDetails = () => {
             setError('')
         }
     }, [id, error]);
+    console.log(state)
+    
     return (
         <>
             <MetaData title={product.name} />
@@ -91,8 +155,8 @@ const ProductDetails = () => {
                         <span className="btn btn-primary plus" >+</span>
                     </div> */}
 
-                    <button type="button" id="cart_btn" className="btn btn-primary d-inline ml-4" disabled={product.stock === 0} >Add to Cart</button>
-
+                    {/* <button type="button" id="cart_btn" className="btn btn-primary d-inline ml-4" disabled={product.stock === 0} >Add to Cart</button> */}
+                    <button type="button" id="cart_btn" className="btn btn-primary d-inline ml-4" disabled={product.stock === 0} onClick={addToCart}>Add to Cart</button>
                     <hr />
 
                     <p>Status: <span id="stock_status" className={product.stock > 0 ? 'greenColor' : 'redColor'} >{product.stock > 0 ? 'In Stock' : 'Out of Stock'}</span></p>
