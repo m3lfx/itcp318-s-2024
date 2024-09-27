@@ -6,8 +6,8 @@ import MetaData from '../Layout/MetaData';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import {authenticate} from '../../utils/helpers'
-// import { getUser } from '../../utils/helpers'
+import {authenticate, getUser} from '../../utils/helpers'
+
 
 
 const Login = () => {
@@ -20,7 +20,7 @@ const Login = () => {
     const navigate = useNavigate()
     let location = useLocation()
     // console.log(location)
-    // const redirect = location.search ? new URLSearchParams(location.search).get('redirect') : ''
+    const redirect = location.search ? new URLSearchParams(location.search).get('redirect') : ''
     // const notify = (error) => toast.error(error, {
     //     position: toast.POSITION.BOTTOM_RIGHT
     // });
@@ -46,11 +46,11 @@ const Login = () => {
         e.preventDefault();
         login(email, password)
     }
-    // useEffect(() => {
-    //     if (getUser() && redirect === 'shipping' ) {
-    //          navigate(`/${redirect}`)
-    //     }
-    // }, [])
+    useEffect(() => {
+        if (getUser() && redirect === 'shipping' ) {
+             navigate(`/${redirect}`)
+        }
+    }, [])
 
     return (
         <>

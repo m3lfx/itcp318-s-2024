@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import MetaData from '../Layout/MetaData'
 import { useParams, useNavigate } from 'react-router-dom'
 
-const Cart = () => {
+const Cart = ({cartItems, addItemToCart, removeItemFromCart}) => {
     const navigate = useNavigate()
 
     const increaseQty = (id, quantity, stock) => {
@@ -27,10 +27,10 @@ const Cart = () => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems))
 
     return (
-        <Fragment>
+        <>
             <MetaData title={'Your Cart'} />
             {cartItems.length === 0 ? <h2 className="mt-5">Your Cart is Empty</h2> : (
-                <Fragment>
+                <>
                     <h2 className="mt-5">Your Cart: <b>{cartItems.length} items</b></h2>
 
                     <div className="row d-flex justify-content-between">
@@ -92,9 +92,9 @@ const Cart = () => {
                             </div>
                         </div>
                     </div>
-                </Fragment>
+                </>
             )}
-        </Fragment>
+        </>
     )
 }
 
