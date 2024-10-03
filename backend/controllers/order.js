@@ -39,3 +39,17 @@ exports.myOrders = async (req, res, next) => {
         orders
     })
 }
+
+exports.getSingleOrder = async (req, res, next) => {
+    const order = await Order.findById(req.params.id).populate('user', 'name email')
+    if (!order) {
+        return res.status(404).json({
+            message: 'No Order found with this ID',
+
+        })
+    }
+    return res.status(200).json({
+        success: true,
+        order
+    })
+}
