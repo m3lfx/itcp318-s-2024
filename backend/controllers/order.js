@@ -29,3 +29,13 @@ exports.newOrder = async (req, res, next) => {
         order
     })
 }
+
+exports.myOrders = async (req, res, next) => {
+    const orders = await Order.find({ user: req.user.id })
+    if (!orders)
+		return res.status(400).json({ message: 'error loading orders' })
+    return res.status(200).json({
+        success: true,
+        orders
+    })
+}

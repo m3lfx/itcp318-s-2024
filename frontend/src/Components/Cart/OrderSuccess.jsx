@@ -4,10 +4,10 @@ import MetaData from '../Layout/MetaData'
 
 const OrderSuccess = () => {
     // sessionStorage.clear();
-    // localStorage.clear();
+    localStorage.clear();
     sessionStorage.removeItem('orderInfo')
-    localStorage.removeItem('cartItems');
-    localStorage.removeItem('shippingInfo');
+    // localStorage.removeItem('cartItems');
+    // localStorage.removeItem('shippingInfo');
     return (
         <>
 
