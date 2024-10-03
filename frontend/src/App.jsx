@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BrowserRouter as Router, Routes, Route , useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from 'react-toastify';
 import './App.css'
 import Header from './Components/Layout/Header'
@@ -14,14 +14,17 @@ import UpdateProfile from './Components/User/UpdateProfile';
 import ForgotPassword from './Components/User/ForgotPassword';
 import NewPassword from './Components/User/NewPassword';
 import Cart from './Components/Cart/Cart';
+import Shipping from './Components/Cart/Shipping';
 import axios from 'axios';
 function App() {
   const [state, setState] = useState({
     cartItems: localStorage.getItem('cartItems')
       ? JSON.parse(localStorage.getItem('cartItems'))
-      : [], shippingInfo: localStorage.getItem('shippingInfo')
-        ? JSON.parse(localStorage.getItem('shippingInfo'))
-        : {},
+      : [],
+    shippingInfo: localStorage.getItem('shippingInfo')
+      ? JSON.parse(localStorage.getItem('shippingInfo'))
+      : {},
+
   })
 
   // const navigate = useNavigate()
@@ -79,6 +82,15 @@ function App() {
     localStorage.setItem('cartItems', JSON.stringify(state.cartItems))
   }
 
+  const saveShippingInfo = async (data) => {
+    setState({
+      ...state,
+      shippingInfo: data
+    })
+    localStorage.setItem('shippingInfo', JSON.stringify(data))
+  }
+
+
 
   return (
     <div className="App">
@@ -101,6 +113,7 @@ function App() {
           <Route path="/password/forgot" element={<ForgotPassword />} exact="true" />
           <Route path="/password/reset/:token" element={<NewPassword />} exact="true" />
           <Route path="/cart" element={<Cart cartItems={state.cartItems} addItemToCart={addItemToCart} removeItemFromCart={removeItemFromCart} />} exact="true" />
+          <Route path="/shipping" element={<Shipping shipping={state.shippingInfo} saveShippingInfo={saveShippingInfo} />} />
         </Routes>
       </Router>
       <Footer />
