@@ -105,6 +105,21 @@ exports.updateOrder = async (req, res, next) => {
     })
 }
 
+exports.deleteOrder = async (req, res, next) => {
+    const order = await Order.findByIdAndDelete(req.params.id)
+
+    if (!order) {
+        return res.status(400).json({
+            message: 'No Order found with this ID',
+
+        })
+        // return next(new ErrorHandler('No Order found with this ID', 404))
+    }
+    return res.status(200).json({
+        success: true
+    })
+}
+
 async function updateStock(id, quantity) {
     const product = await Product.findById(id);
 

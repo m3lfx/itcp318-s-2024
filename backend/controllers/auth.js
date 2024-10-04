@@ -73,7 +73,7 @@ exports.loginUser = async (req, res, next) => {
 exports.getUserProfile = async (req, res, next) => {
     const user = await User.findById(req.user.id);
 
-    res.status(200).json({
+    return res.status(200).json({
         success: true,
         user
     })
@@ -203,4 +203,16 @@ exports.resetPassword = async (req, res, next) => {
         user,
      	token
      });
+}
+
+exports.allUsers = async (req, res, next) => {
+    const users = await User.find();
+    if (!users) {
+        return res.status(400).json({ error: 'no users found' })
+    }
+    
+    return res.status(200).json({
+        success: true,
+        users
+    })
 }
