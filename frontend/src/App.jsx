@@ -21,6 +21,8 @@ import OrderSuccess from './Components/Cart/OrderSuccess';
 import ListOrders from './Components/Order/ListOrders';
 import OrderDetails from './Components/Order/OrderDetails';
 import ProductsList from './Components/Admin/ProductsList';
+import NewProduct from './Components/Admin/NewProduct';
+import UpdateProduct from './Components/Admin/UpdateProduct';
 
 import axios from 'axios';
 
@@ -129,6 +131,10 @@ function App() {
           <Route path="/orders/me" element={<ListOrders />} />
           <Route path="/order/:id" element={<OrderDetails />} />
           <Route path="/admin/products" element={<ProductsList />} />
+          <Route path="/admin/product" element={<NewProduct />} />
+          <Route
+            path="/admin/product/:id"
+            element={<UpdateProduct />} />
         </Routes>
       </Router>
       <Footer />
