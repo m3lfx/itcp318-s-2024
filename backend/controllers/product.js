@@ -79,10 +79,10 @@ exports.newProduct = async (req, res, next) => {
 	let imagesLinks = [];
 
 	for (let i = 0; i < images.length; i++) {
-		let imageDataUri = images[i]
+		
 		// console.log(imageDataUri)
 		try {
-			const result = await cloudinary.v2.uploader.upload(`${imageDataUri}`, {
+			const result = await cloudinary.v2.uploader.upload(images[i], {
 				folder: 'products',
 				width: 150,
 				crop: "scale",

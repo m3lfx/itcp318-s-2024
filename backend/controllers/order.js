@@ -53,3 +53,26 @@ exports.getSingleOrder = async (req, res, next) => {
         order
     })
 }
+
+exports.allOrders = async (req, res, next) => {
+    const orders = await Order.find()
+    // console.log(orders)
+
+    if (!orders) {
+        return res.status(404).json({
+            message: 'No Orders',
+
+        })
+    }
+    let totalAmount = 0;
+
+    orders.forEach(order => {
+        totalAmount += order.totalPrice
+    })
+
+    return res.status(200).json({
+        success: true,
+        totalAmount,
+        orders
+    })
+}
