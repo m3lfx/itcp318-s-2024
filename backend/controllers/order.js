@@ -76,3 +76,39 @@ exports.allOrders = async (req, res, next) => {
         orders
     })
 }
+
+exports.updateOrder = async (req, res, next) => {
+    const order = await Order.findById(req.params.id)
+    console.log(req.body.order)
+    if (!order) {
+        return res.status(404).json({
+            message: 'No Order found',
+
+        })
+    }
+    if (order.orderStatus === 'Delivered') {
+        return res.status(400).json({
+            message: 'You have already delivered this order',
+
+        })
+    }
+
+    order.orderItems.forEach(async item => {
+        await updateStock(item.product, item.quantity)
+    })
+
+    order.orderStatus = req.body.status
+    order.deliveredAt = Date.now()
+    await order.save()
+    return res.status(200).json({
+        success: true,
+    })
+}
+
+async function updateStock(id, quantity) {
+    const product = await Product.findById(id);
+
+    product.stock = product.stock - quantity;
+
+    await product.save({ validateBeforeSave: false })
+}
