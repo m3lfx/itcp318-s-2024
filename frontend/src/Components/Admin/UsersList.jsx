@@ -7,9 +7,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import MetaData from '../Layout/MetaData'
 import Loader from '../Layout/Loader'
 import Sidebar from './SideBar'
-import { errMsg, successMsg } from '../../utils/helpers';
+import { errMsg, successMsg, getToken } from '../../utils/helpers';
 import axios from 'axios';
-import { getToken } from '../../utils/helpers';
+
 
 const UsersList = () => {
     const [loading, setLoading] = useState(true)
@@ -101,14 +101,14 @@ const UsersList = () => {
                 name: user.name,
                 email: user.email,
                 role: user.role,
-                actions: <Fragment>
+                actions: <>
                     <Link to={`/admin/user/${user._id}`} className="btn btn-primary py-1 px-2">
                         <i className="fa fa-pencil"></i>
                     </Link>
                     <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deleteUserHandler(user._id)}>
                         <i className="fa fa-trash"></i>
                     </button>
-                </Fragment>
+                </>
             })
         })
         return data;

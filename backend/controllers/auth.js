@@ -216,3 +216,42 @@ exports.allUsers = async (req, res, next) => {
         users
     })
 }
+
+exports.getUserDetails = async (req, res, next) => {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+        return res.status(400).json({ message: `User does not found with id: ${req.params.id}` })
+       
+    }
+
+    return res.status(200).json({
+        success: true,
+        user
+    })
+}
+
+exports.updateUser = async (req, res, next) => {
+    const newUserData = {
+        name: req.body.name,
+        email: req.body.email,
+        role: req.body.role
+    }
+
+    const user = await User.findByIdAndUpdate(req.params.id, newUserData, {
+        new: true,
+        runValidators: true,
+        // useFindAndModify: false
+    })
+
+    if (!user) {
+        return res.status(400).json({ message: `User not updated ${req.params.id}` })
+       
+    }
+
+
+    return res.status(200).json({
+        success: true
+    })
+}
+
