@@ -39,6 +39,7 @@ const ProcessOrder = () => {
 
             const { data } = await axios.get(`${import.meta.env.VITE_API}/order/${id}`, config)
             setOrder(data.order)
+            setStatus(data.order.orderStatus)
             setLoading(false)
         } catch (error) {
             setError(error.response.data.message)
