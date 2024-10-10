@@ -28,6 +28,7 @@ import ProcessOrder from './Components/Admin/ProcessOrder';
 import UsersList from './Components/Admin/UsersList';
 
 import UpdateUser from './Components/Admin/UpdateUser';
+import ProtectedRoute from './Components/Route/ProtectedRoute';
 import axios from 'axios';
 
 function App() {
@@ -134,24 +135,51 @@ function App() {
 
           <Route path="/orders/me" element={<ListOrders />} />
           <Route path="/order/:id" element={<OrderDetails />} />
-          <Route path="/admin/products" element={<ProductsList />} />
+          {/* <Route path="/admin/products" element={<ProductsList />} /> */}
           <Route path="/admin/product" element={<NewProduct />} />
           <Route
             path="/admin/product/:id"
             element={<UpdateProduct />} />
 
-<Route
+          {/* <Route
             path="/admin/orders"
             element={<OrdersList />}
-          />
+          /> */}
           <Route
             path="/admin/order/:id"
             element={<ProcessOrder />} />
 
-<Route
+          {/* <Route
             path="/admin/users"
-            element={<UsersList />} />
-            <Route path="/admin/user/:id" element={<UpdateUser />} />
+            element={<UsersList />} /> */}
+          <Route path="/admin/user/:id" element={<UpdateUser />} />
+
+          <Route
+            path="/admin/products"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <ProductsList />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/orders"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <OrdersList />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/users"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <UsersList />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </Router>
       <Footer />

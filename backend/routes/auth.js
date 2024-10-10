@@ -13,7 +13,7 @@ const { registerUser,
     getUserDetails,
     updateUser,
 } = require('../controllers/auth');
-    const { isAuthenticatedUser, } = require('../middlewares/auth');
+    const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth');
 
 router.post('/register', upload.single('avatar'), registerUser);
 router.post('/login', loginUser);
@@ -23,6 +23,6 @@ router.put('/password/update', isAuthenticatedUser, updatePassword)
 router.post('/password/forgot', forgotPassword);
 router.put('/password/reset/:token', resetPassword);
 
-router.get('/admin/users', isAuthenticatedUser, allUsers)
+router.get('/admin/users', isAuthenticatedUser, authorizeRoles('admin'), allUsers)
 router.route('/admin/user/:id').get(isAuthenticatedUser,  getUserDetails).put(isAuthenticatedUser, updateUser)
 module.exports = router;
