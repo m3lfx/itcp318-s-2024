@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import '../../App.css'
 import Search from './Search'
 
@@ -10,8 +10,8 @@ import { getUser, logout } from '../../utils/helpers'
 
 
 
-const Header = ({cartItems}) => {
-	const [user, setUser] = useState({})
+const Header = ({ cartItems }) => {
+    const [user, setUser] = useState({})
     const navigate = useNavigate()
 
 
@@ -21,19 +21,22 @@ const Header = ({cartItems}) => {
             position: 'bottom-right'
         });
     }
-	useEffect(() => {
+    useEffect(() => {
         setUser(getUser())
     }, []);
 
-	return (
-		<>
-			<nav className="navbar row">
-				<div className="col-12 col-md-3">
-					<div className="navbar-brand">
-						<img src="./images/shopit_logo.png" />
-					</div>
-				</div>
-				{/* <div className="col-12 col-md-6 mt-2 mt-md-0">
+    return (
+        <>
+            <nav className="navbar row">
+                <div className="col-12 col-md-3">
+                    <div className="navbar-brand">
+                        <Link to="/" style={{ textDecoration: 'none' }} >
+                            <img src="./images/shopit_logo.png" />
+                        </Link>
+
+                    </div>
+                </div>
+                {/* <div className="col-12 col-md-6 mt-2 mt-md-0">
 					<div className="input-group">
 						<input
 							type="text"
@@ -48,9 +51,9 @@ const Header = ({cartItems}) => {
 						</div>
 					</div>
 				</div> */}
-				<Search />
-				<div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
-				{user ? (<div className="ml-4 dropdown d-inline">
+                <Search />
+                <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
+                    {user ? (<div className="ml-4 dropdown d-inline">
                         <Link to="#!" className="btn dropdown-toggle text-white mr-4" type="button" id="dropDownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <figure className="avatar avatar-nav">
                                 <img
@@ -77,17 +80,17 @@ const Header = ({cartItems}) => {
                         </div>
                     </div>) : <Link to="/login" className="btn ml-4" id="login_btn">Login</Link>}
 
-					<Link to="/cart" style={{ textDecoration: 'none' }} >
+                    <Link to="/cart" style={{ textDecoration: 'none' }} >
                         <span id="cart" className="ml-3">Cart</span>
-                        
+
                         {/*<span className="ml-1" id="cart_count">2</span>*/}
                     </Link>
-					<span className="ml-1" id="cart_count">{cartItems.length}</span>
-					{/* <span className="ml-1" id="cart_count">2</span> */}
-				</div>
-			</nav>
-		</>
-	)
+                    <span className="ml-1" id="cart_count">{cartItems.length}</span>
+                    {/* <span className="ml-1" id="cart_count">2</span> */}
+                </div>
+            </nav>
+        </>
+    )
 }
 
 export default Header

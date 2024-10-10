@@ -8,6 +8,8 @@ const { getProducts,
     deleteProduct,
     newProduct,
     updateProduct,
+    createProductReview,
+    getProductReviews,
  } = require('../controllers/product');
 
  const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth');
@@ -18,4 +20,8 @@ router.get('/admin/products', isAuthenticatedUser, authorizeRoles('admin'), getA
 // router.delete('/admin/product/:id', isAuthenticatedUser, deleteProduct);
 router.route('/admin/product/:id', isAuthenticatedUser, ).put(updateProduct).delete(deleteProduct);
 router.post('/admin/product/new', isAuthenticatedUser, upload.array('images', 10), newProduct);
+router.put('/review', isAuthenticatedUser, createProductReview);
+router.get('/reviews',isAuthenticatedUser, getProductReviews)
+
+
 module.exports = router;
