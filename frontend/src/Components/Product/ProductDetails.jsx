@@ -286,7 +286,7 @@ const ProductDetails = ({ cartItems, addItemToCart }) => {
 
                         </div>
                     </div>
-                    {product.reviews && product.reviews.length > 0 && (
+                    { product.reviews.length > 0 && (
 
 <ListReviews reviews={product.reviews} />
 

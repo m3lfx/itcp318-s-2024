@@ -20,6 +20,8 @@ const Dashboard = () => {
     const [orders, setOrders] = useState([])
     const [loading, setLoading] = useState(true)
     const [totalAmount, setTotalAmount] = useState([])
+    const [allOrders, setAllOrders] = useState([])
+    const [allUsers, setAllUsers] = useState([])
     let outOfStock = 0;
     products.forEach(product => {
         if (product.stock === 0) {
@@ -46,10 +48,44 @@ const Dashboard = () => {
         }
     }
 
+    const adminOrders = async () => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${getToken()}`
+                }
+            }
+            const { data } = await axios.get(`${import.meta.env.VITE_API}/admin/orders`, config)
+            setAllOrders(data.orders)
+            
+        } catch (error) {
+            setError(error.response.data.message)
+        }
+    }
+
+    const adminUsers = async () => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${getToken()}`
+                }
+            }
+            const { data } = await axios.get(`${import.meta.env.VITE_API}/admin/users`, config)
+            setAllUsers(data.users)
+            
+
+        } catch (error) {
+            setError(error.response.data.message)
+            
+        }
+    }
+
     useEffect(() => {
         getAdminProducts()
-        // allOrders()
-        // allUsers()
+        adminOrders()
+        adminUsers()
     }, [])
 
     return (
@@ -96,7 +132,7 @@ const Dashboard = () => {
                                     <div className="card text-white bg-danger o-hidden h-100">
 
                                         <div className="card-body">
-                                            <div className="text-center card-font-size">Orders<br /> <b>{orders && orders.length}</b></div>
+                                            <div className="text-center card-font-size">Orders<br /> <b>{allOrders && allOrders.length}</b></div>
                                         </div>
 
                                         <Link className="card-footer text-white clearfix small z-1" to="/admin/orders">
@@ -113,7 +149,7 @@ const Dashboard = () => {
                                     <div className="card text-white bg-info o-hidden h-100">
 
                                         <div className="card-body">
-                                            <div className="text-center card-font-size">Users<br /> <b>{users && users.length}</b></div>
+                                            <div className="text-center card-font-size">Users<br /> <b>{allUsers && allUsers.length}</b></div>
                                         </div>
 
                                         <Link className="card-footer text-white clearfix small z-1" to="/admin/users">
