@@ -29,6 +29,7 @@ import UsersList from './Components/Admin/UsersList';
 
 import UpdateUser from './Components/Admin/UpdateUser';
 import ProtectedRoute from './Components/Route/ProtectedRoute';
+import Dashboard from './Components/Admin/Dashboard';
 import axios from 'axios';
 
 function App() {
@@ -177,6 +178,15 @@ function App() {
             element={
               <ProtectedRoute isAdmin={true}>
                 <UsersList />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <Dashboard />
               </ProtectedRoute>
             }
           />
