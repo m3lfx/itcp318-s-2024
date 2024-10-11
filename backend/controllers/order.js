@@ -179,14 +179,14 @@ exports.customerSales = async (req, res, next) => {
                 as: 'userDetails'
             },
         },
-        {
-            $group: {
-                _id: "$user",
-                total: { $sum: "$totalPrice" },
-            }
-        },
+        // {
+        //     $group: {
+        //         _id: "$user",
+        //         total: { $sum: "$totalPrice" },
+        //     }
+        // },
 
-        // { $unwind: "$userDetails" },
+        { $unwind: "$userDetails" },
         // {
         //     $group: {
         //         _id: "$user",
@@ -201,19 +201,19 @@ exports.customerSales = async (req, res, next) => {
         //         newRoot: { $mergeObjects: [{ total: '$total' }, '$doc'] },
         //     },
         // },
-        // {
-        //     $group: {
-        //         _id: "$userDetails.name",
-        //         total: { $sum: "$totalPrice" }
-        //     }
-        // },
-        // {
-        //     $project: {
-        //         _id: 0,
-        //         "userDetails.name": 1,
-        //         total: 1,
-        //     }
-        // },
+        {
+            $group: {
+                _id: "$userDetails.name",
+                total: { $sum: "$totalPrice" }
+            }
+        },
+        {
+            $project: {
+                _id: 1,
+                // "userDetails.name": 1,
+                total: true,
+            }
+        },
         // { $sort: { total: -1 } },
 
     ])
