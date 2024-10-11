@@ -214,7 +214,7 @@ exports.customerSales = async (req, res, next) => {
                 total: true,
             }
         },
-        // { $sort: { total: -1 } },
+        { $sort: { total: 1 } },
 
     ])
     console.log(customerSales)
