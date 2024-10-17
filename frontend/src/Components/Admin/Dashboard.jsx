@@ -9,7 +9,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import UserSalesChart from './UserSalesChart';
-// import MonthlySalesChart from './MonthlySalesChart';
+import MonthlySalesChart from './MonthlySalesChart';
 import ProductSalesChart from './ProductSalesChart';
 
 const Dashboard = () => {
@@ -176,7 +176,7 @@ const Dashboard = () => {
                         <UserSalesChart />
                     </>
                     <>
-                        {/* <MonthlySalesChart /> */}
+                        <MonthlySalesChart />
                     </>
                     <>
                         <ProductSalesChart />
