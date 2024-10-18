@@ -1,5 +1,5 @@
 const User = require('../models/user');
-// const sendToken = require('../utils/jwtToken');
+const sendToken = require('../utils/jwtToken');
 const sendEmail = require('../utils/sendEmail')
 const crypto = require('crypto')
 const cloudinary = require('cloudinary')
@@ -25,14 +25,14 @@ exports.registerUser = async (req, res, next) => {
         },
     })
     //test token
-     const token = user.getJwtToken();
+    //  const token = user.getJwtToken();
 
-    return  res.status(201).json({
-      	success:true,
-      	user,
-     	token
-      })
-    // sendToken(user, 200, res)
+    // return  res.status(201).json({
+    //   	success:true,
+    //   	user,
+    //  	token
+    //   })
+    sendToken(user, 200, res)
 }
 
 exports.loginUser = async (req, res, next) => {
@@ -59,15 +59,15 @@ exports.loginUser = async (req, res, next) => {
     if (!isPasswordMatched) {
         return res.status(401).json({ message: 'Invalid Email or Password' })
     }
-    const token = user.getJwtToken();
+    // const token = user.getJwtToken();
 
-     return res.status(201).json({
-     	success:true,
-        user,
-     	token
-     });
+    //  return res.status(201).json({
+    //  	success:true,
+    //     user,
+    //  	token
+    //  });
     //  user = await User.findOne({ email })
-    // sendToken(user, 200, res)
+    sendToken(user, 200, res)
 }
 
 exports.getUserProfile = async (req, res, next) => {
@@ -130,13 +130,14 @@ exports.updatePassword = async (req, res, next) => {
     }
     user.password = req.body.password;
      await user.save();
-    const token = user.getJwtToken();
+    // const token = user.getJwtToken();
 
-     return res.status(201).json({
-     	success:true,
-        user,
-     	token
-     });
+    //  return res.status(201).json({
+    //  	success:true,
+    //     user,
+    //  	token
+    //  });
+    sendToken(user, 200, res)
 
 }
 
@@ -196,13 +197,14 @@ exports.resetPassword = async (req, res, next) => {
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
     await user.save();
-    const token = user.getJwtToken();
+    // const token = user.getJwtToken();
 
-     return res.status(201).json({
-     	success:true,
-        user,
-     	token
-     });
+    //  return res.status(201).json({
+    //  	success:true,
+    //     user,
+    //  	token
+    //  });
+    sendToken(user, 200, res)
 }
 
 exports.allUsers = async (req, res, next) => {

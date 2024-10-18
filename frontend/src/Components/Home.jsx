@@ -7,17 +7,19 @@ import Pagination from 'react-js-pagination'
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import Loader from './Layout/Loader'
+import { useDispatch, useSelector } from 'react-redux'
+import { getProducts } from '../actions/productActions'
 
 
 const Home = () => {
-    const [loading, setLoading] = useState(true)
-    const [products, setProducts] = useState([])
-    const [productsCount, setProductsCount] = useState(0)
+   
     const [currentPage, setCurrentPage] = useState(1)
-    const [resPerPage, setResPerPage] = useState(0)
-    const [filteredProductsCount, setFilteredProductsCount] = useState(0)
+   
     const [price, setPrice] = useState([1, 1000]);
     const [category, setCategory] = useState('');
+
+    const dispatch = useDispatch();
+    const {loading, products, error, productsCount, resPerPage, filteredProductsCount } = useSelector(state => state.products);
 
     const categories = [
         'Electronics',
@@ -38,26 +40,11 @@ const Home = () => {
     const createSliderWithTooltip = Slider.createSliderWithTooltip;
     const Range = createSliderWithTooltip(Slider.Range);
 
-    const getProducts = async (page = 1, keyword = '', price, category) => {
-
-        let link = `http://localhost:4001/api/v1/products?page=${page}&keyword=${keyword}&price[lte]=${price[1]}&price[gte]=${price[0]}`
-
-        if (category) {
-            link = `http://localhost:4001/api/v1/products?keyword=${keyword}&page=${page}&price[lte]=${price[1]}&price[gte]=${price[0]}&category=${category}`
-        }
-
-        let res = await axios.get(link)
-        console.log(res)
-        setProducts(res.data.products)
-        setResPerPage(res.data.resPerPage)
-        setProductsCount(res.data.count)
-        setFilteredProductsCount(res.data.filteredProductsCount)
-        setLoading(false)
-
-    }
+  
 
     useEffect(() => {
-        getProducts(currentPage, keyword, price, category)
+      
+        dispatch(getProducts(currentPage, keyword,  price, category))
     }, [currentPage, keyword, price, category]);
 
     let count = productsCount
